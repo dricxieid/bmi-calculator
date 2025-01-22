@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #6dd5fa, #2980b9);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #ffffff1a;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .container h1 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .category {
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+
+        .category span {
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+            }
+
+            .form-group label, .result, .category {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BMI Calculator</h1>
+        <form id="bmi-form">
+            <div class="form-group">
+                <label for="height">Height (cm):</label>
+                <input type="number" id="height" placeholder="Enter your height in cm" required>
+            </div>
+            <div class="form-group">
+                <label for="weight">Weight (kg):</label>
+                <input type="number" id="weight" placeholder="Enter your weight in kg" required>
+            </div>
+            <button type="submit">Calculate BMI</button>
+        </form>
+        <div class="result" id="result"></div>
+        <div class="category" id="category"></div>
+    </div>
+
+    <script>
+        document.getElementById('bmi-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+
+            if (!height || !weight || height <= 0 || weight <= 0) {
+                alert('Please enter valid positive numbers for height and weight.');
+                return;
+            }
+
+            const bmi = (weight / ((height / 100) ** 2)).toFixed(2);
+            let category = '';
+
+            if (bmi < 18.5) {
+                category = '<span style="color: #3498db;">Underweight</span>';
+            } else if (bmi >= 18.5 && bmi < 24.9) {
+                category = '<span style="color: #2ecc71;">Normal weight</span>';
+            } else if (bmi >= 25 && bmi < 29.9) {
+                category = '<span style="color: #f39c12;">Overweight</span>';
+            } else {
+                category = '<span style="color: #e74c3c;">Obesity</span>';
+            }
+
+            document.getElementById('result').innerText = `Your BMI is ${bmi}`;
+            document.getElementById('category').innerHTML = `Category: ${category}`;
+        });
+    </script>
+</body>
+</html>
